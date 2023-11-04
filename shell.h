@@ -19,6 +19,6 @@
  * typically "#cisfun$ ". It prompts the user to eneter a command in shell
  */
 void display_prompt(void);
-
+void executing_command(const char *command);
 
 #endif /* SHELL_H */
