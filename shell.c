@@ -1,24 +1,13 @@
 #include "shell.h"
-/**
- * display_prompt - displays a shell prompt
- *
- * This function displays the shell prompt, which typically consists of
- * the string "#cisfun$ ".
- */
-void display_prompt(void)
-{
-	printf("#cisfun$ ");
-	fflush(stdout);
-}
+
 /**
  * main - entry point of the shell program
- *
  * This function serves as the main entry point for basic shell program
  * Reads user input , creates child processes to execute commands and
  * waits for them to complete
- *
  * Return: 0 on success, non-zero on failure
  */
+void executing_command(const char *command);
 int main(void)
 {
 	int  status; /* Stores the exit status of child process */
@@ -35,32 +24,37 @@ int main(void)
 			display_prompt();
 			continue;
 		}
-		pid = fork();
-		if (pid == -1)
+		executing_command(command);
+	}
+void executing_command(const char *command)
+{
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		execlp(command, command, NULL); /* Child process code (executing command) */
+		perror("execlp");
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		waitpid(pid, &status, 0); /* Parent process code (waiting for child) */
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
 		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
-		else if (pid == 0)
-		{
-			execlp(command, command, NULL); /* Child process code (executing command) */
-			perror("execlp");
-			exit(EXIT_FAILURE);
+			display_prompt(); /* Command execution succeeded */
 		}
 		else
 		{
-			waitpid(pid, &status, 0); /* Parent process code (waiting for child) */
-			if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
-			{
-				display_prompt(); /* Command execution succeeded */
-			}
-			else
-			{
-				fprintf(stderr, "Error: Command execution failed.\n");
-				display_prompt();
-			}
+			fprintf(stderr, "Error: Command execution failed.\n");
+			display_prompt();
 		}
 	}
+}
+
 	printf("\n");
 	return (0); /* Exit the shell with a status of 0 (success) */
 }
