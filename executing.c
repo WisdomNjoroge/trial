@@ -3,7 +3,8 @@
 void executing_command(const char *command)
 {
 	pid_t pid;
-	int status;
+	int status, m = 0;
+	char *args[MAX_COMMAND_LENGTH], *tkn;
 
 	pid = fork();
 	if (pid == -1)
@@ -13,8 +14,17 @@ void executing_command(const char *command)
 	}
 	else if (pid == 0)
 	{
-		execlp(command, command, NULL); /* Child process code (executing command) */
-		perror("execlp");
+		tkn = strtok((char *)command, " ");
+		while (tkn != NULL && m < MAX_COMMAND_LENGTH - 1)
+		{
+			args[m] = tkn;
+			tkn = strtok(NULL, " ");
+			m++;
+		}
+		args[m] = NULL;
+
+		execvp(args[0], args); /* Child process code (executing command) */
+		perror("execvp");
 		exit(EXIT_FAILURE);
 	}
 	else

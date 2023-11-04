@@ -11,6 +11,7 @@ void executing_command(const char *command);
 
 int main(void)
 {
+	
 	char command[MAX_COMMAND_LENGTH];
 
 	display_prompt(); /* Display the shell prompt to the user */
