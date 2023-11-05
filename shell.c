@@ -5,13 +5,13 @@
  * This function serves as the main entry point for basic shell program
  * Reads user input , creates child processes to execute commands and
  * waits for them to complete
+ * @command: a string representing the command to be executed
  * Return: 0 on success, non-zero on failure
  */
 void executing_command(const char *command);
 
 int main(void)
 {
-	
 	char command[MAX_COMMAND_LENGTH];
 
 	display_prompt(); /* Display the shell prompt to the user */

@@ -1,5 +1,10 @@
 #include "shell.h"
 
+/**
+ * executing_command - execute a shell command
+ *
+ * @command: a string representing the command to be excuted
+ */
 void executing_command(const char *command)
 {
 	pid_t pid;
