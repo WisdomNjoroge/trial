@@ -28,9 +28,11 @@ void executing_command(const char *command)
 		}
 		args[m] = NULL;
 
-		execvp(args[0], args); /* Child process code (executing command) */
-		perror("execvp");
-		exit(EXIT_FAILURE);
+		if (execvp(args[0], args) == -1) /* Child process code (executing command) */
+		{
+			perror("execvp");
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{

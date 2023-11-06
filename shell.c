@@ -9,9 +9,11 @@
  * Return: 0 on success, non-zero on failure
  */
 void executing_command(const char *command);
+extern char **environ;
 
 int main(void)
 {
+	char **env = environ;
 	char command[MAX_COMMAND_LENGTH];
 
 	display_prompt(); /* Display the shell prompt to the user */
@@ -19,10 +21,18 @@ int main(void)
 	{
 		command[strcspn(command, "\n")] = '\0';
 
-		if (strlen(command) == 0)
+		if (strcmp(command, "exit") == 0)
 		{
-			display_prompt();
-			continue;
+			printf("Exiting the shell$.\n");
+			exit(EXIT_SUCCESS);
+		}
+		else if (strcmp(command, "env") == 0)
+		{
+			while (*env != NULL)
+			{
+				printf("%s\n", *env);
+				env++;
+			}
 		}
 		executing_command(command);
 	}
