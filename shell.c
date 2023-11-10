@@ -2,6 +2,7 @@
 
 /**
  * main - entry point of the shell program
+ * Description:
  * This function serves as the main entry point for basic shell program
  * Reads user input , creates child processes to execute commands and
  * waits for them to complete
