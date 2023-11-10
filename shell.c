@@ -9,12 +9,12 @@
  * Return: 0 on success, non-zero on failure
  */
 void executing_command(const char *command);
-extern char **environ;
 
 int main(void)
 {
 	char **env = environ;
 	char command[MAX_COMMAND_LENGTH];
+	char *line;
 
 	display_prompt(); /* Display the shell prompt to the user */
 	while (fgets(command, MAX_COMMAND_LENGTH, stdin) != NULL)
@@ -35,7 +35,15 @@ int main(void)
 			}
 		}
 		executing_command(command);
+		line = pers0nal_getline();
+		if (line == NULL)
+		{
+			break;
+		}
+		printf("You entered: %s\n", line);
+		free(line);
 	}
+
 	printf("\n");
 	return (0); /* Exit the shell with a status of 0 (success) */
 }

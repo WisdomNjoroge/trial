@@ -11,6 +11,7 @@
 #include <sys/wait.h>
 
 #define MAX_COMMAND_LENGTH 300
+#define BUFFER_SIZE 1024
 
 /**
  * display_prompt - display a shell prompt
@@ -20,5 +21,6 @@
  */
 void display_prompt(void);
 void executing_command(const char *command);
-
+extern char **environ;
+char *pers0nal_getline(void);
 #endif /* SHELL_H */
