@@ -1,5 +1,10 @@
 #include "shell.h"
 
+/*
+ * main - entry point to the shell program
+ * Return: always 0 (success)
+ */
+
 int main(void)
 {
 	char *line;
